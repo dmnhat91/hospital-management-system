@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Patient</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body class="smooth-scroll">
+    <div class="container-fluid">
+        <nav class="my-nav-bar navbar navbar-expand-md navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#"><label class="logo"
+                        style="font-size: 40px; font-family: Comic Sans MS">CLINIC</label></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  mr-4">
+                            <a class="active nav-link" href="patient.html" style="font-size: 20px">Patient</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="visit.html" style="font-size: 20px">Visit</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="drug.html" style="font-size: 20px">Drug</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="ICD.html" style="font-size: 20px">ICD</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="medicalService.html" style="font-size: 20px">Medical Service</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="login.html" style="font-size: 20px">Sign Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br><br><br><br><br>
+
+        <div class="container" style="margin-bottom: 40px">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <button type="submit" class="btn btn-outline-dark" data-toggle="modal"
+                        data-target="#createPatientModal">Create new patient</button>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="form-inline">
+                        <select id="search-by" onchange="changeSearchBarStt()" class="browser-default custom-select">
+                            <option selected>Search by..</option>
+                            <option value="1">Search by name</option>
+                            <option value="2">Search by patientID</option>
+                            <option value="3">Search by Birthday</option>
+                        </select>
+                        <input id="search-bar" type="text" class="form-control" placeholder="" name="search-content"
+                            disabled>
+                        <button id="search-btn" onclick="searchPatient()" type="submit" class="btn btn-outline-dark"
+                            disabled>Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container smooth-scroll">
+            <table id="table" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>Patient Name</th>
+                        <th>Birthday</th>
+                        <th>Gender</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- CREATE PATIENT MODAL -->
+        <div class="modal" id="createPatientModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Patient Information:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Patient Name:</label>
+                                        <input id="new-name" type="text" class="form-control"
+                                            placeholder="Patient Name.." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthday">Birthday:</label>
+                                        <input id="new-birthday" type="date" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-9 col-md-12">
+                                            <label for="exampleFormControlInput1">Phone:</label>
+                                            <input id="new-phone" type="phone" class="form-control"
+                                                placeholder="Phone Number.." required>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-12">
+                                            <label for="exampleFormControlInput1">Gender:</label>
+                                            <select id="new-gender" class="browser-default custom-select">
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email address:</label>
+                                        <input id="new-email" type="email" class="form-control"
+                                            placeholder="name@example.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input id="new-address" type="text" class="form-control" placeholder="Address.."
+                                            required>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button onclick="checkCreateNewPatientForm()" id="submit" type="submit" class="btn btn-dark"
+                            data-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PATIENT DETAILS MODAL -->
+        <div class="modal" id="patientDetailsModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Patient Details:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <form>
+                                    <fieldset id="details-fieldset" disabled>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Patient ID:</label>
+                                            <input id="detail-id" type="text" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Patient Name:</label>
+                                            <input id="detail-name" type="text" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Birthday:</label>
+                                            <input id="detail-birthday" type="text" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-9 col-md-12">
+                                                <label for="exampleFormControlInput1">Phone:</label>
+                                                <input id="detail-phone" type="phone" class="form-control"
+                                                    placeholder="" required>
+                                            </div>
+                                            <div class="form-group col-lg-3 col-md-12">
+                                                <label for="exampleFormControlInput1">Gender:</label>
+                                                <select id="detail-gender" class="browser-default custom-select">
+                                                    <option value="Male" selected>Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Email address:</label>
+                                            <input id="detail-email" type="email" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Address:</label>
+                                            <input id="detail-address" type="text" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+                            data-target="#updatePatientModal">Update</button>
+                        <button onclick="deletePatient()" type="button" data-dismiss="modal"
+                            class="btn btn-dark">Delete</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPDATE PATIENT MODAL -->
+        <div class="modal" id="updatePatientModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Patient:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Patient ID:</label>
+                                        <input id="update-id" type="text" class="form-control"
+                                            placeholder="Patient ID.." disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Patient Name:</label>
+                                        <input id="update-name" type="text" class="form-control"
+                                            placeholder="Patient Name.." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Birthday:</label>
+                                        <input id="update-birthday" type="date" class="form-control"
+                                            placeholder="Birthday.." required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-9 col-md-12">
+                                            <label for="exampleFormControlInput1">Phone:</label>
+                                            <input id="update-phone" type="phone" class="form-control"
+                                                placeholder="Phone Number.." required>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-12">
+                                            <label for="exampleFormControlInput1">Gender:</label>
+                                            <select id="update-gender" class="browser-default custom-select">
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email address:</label>
+                                        <input id="update-email" type="email" class="form-control"
+                                            placeholder="name@example.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input id="update-address" type="text" class="form-control"
+                                            placeholder="Address.." required>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button onclick="checkUpdatePatientForm()" type="button" class="btn btn-dark"
+                            data-dismiss="modal" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+                            data-target="#patientDetailsModal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    baseURL = "http://localhost:8080"
+
+    var username = sessionStorage.username
+    var password = sessionStorage.password
+    var code = window.btoa(`${username}:${password}`)
+
+    function loadPatients() {
+        var table = document.getElementsByTagName('table')[0]
+
+        //Impossible to delete from top to bot --> have to delete from bot to top
+        for (let i = table.rows.length - 1; i > 0; i--) {
+            table.deleteRow(i);
+        }
+
+        fetch(baseURL + '/patients', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var newRow = table.insertRow(table.rows.length);
+
+                    var cel1 = newRow.insertCell(0);
+                    var cel2 = newRow.insertCell(1);
+                    var cel3 = newRow.insertCell(2);
+                    var cel4 = newRow.insertCell(3);
+                    var cel5 = newRow.insertCell(4);
+
+                    var str = `<div class="float-left" style="margin-right: 10px"> 
+                        <button onclick="displayPatient(${json[i].id}, '${json[i].name}', '${json[i].birthdate}', '${json[i].address}', '${json[i].gender}', '${json[i].phone}', '${json[i].email}')" type="submit" class="btn btn-outline-dark" data-toggle="modal" data-target="#patientDetailsModal">Details</button> 
+                        </div>
+                        <div class="float-left">
+                            <button type="submit" class="btn btn-outline-dark" onclick="window.location.href='visit.html?pid=${json[i].id}'">Add Visit</button>
+                        </div>`;
+
+                    cel1.innerHTML = json[i].id;
+                    cel2.innerHTML = json[i].name;
+                    cel3.innerHTML = json[i].birthdate;
+                    cel4.innerHTML = json[i].gender;
+                    cel5.innerHTML = str;
+                }
+            })
+
+    }
+
+    function doAdd() {
+        var name = $('#new-name').val()
+        var birthday = $('#new-birthday').val()
+        var phone = $('#new-phone').val()
+        var gender = $('#new-gender').val()
+        var email = $('#new-email').val()
+        var address = $('#new-address').val()
+
+        //Clear input values
+        document.getElementById("new-name").value = ''
+        document.getElementById("new-birthday").value = ''
+        document.getElementById("new-phone").value = ''
+        document.getElementById("new-gender").value = 'Male'
+        document.getElementById("new-email").value = ''
+        document.getElementById("new-address").value = ''
+
+        var obj = {
+            'name': name,
+            'birthdate': birthday,
+            'gender': gender,
+            'address': address,
+            'phone': phone,
+            'email': email
+        }
+
+        fetch(baseURL + '/patients', {
+            headers: {
+                'Authorization': 'Basic ' + code,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(obj)
+        })
+            .then(() => loadPatients())
+    }
+
+    function displayPatient(id, name, birthday, address, gender, phone, email) {
+
+        document.getElementById("detail-id").value = id;
+        document.getElementById("detail-name").value = name;
+        document.getElementById("detail-birthday").value = birthday;
+        document.getElementById("detail-address").value = address;
+        document.getElementById("detail-gender").value = gender;
+        document.getElementById("detail-phone").value = phone;
+        document.getElementById("detail-email").value = email;
+
+        document.getElementById("update-id").value = id;
+        document.getElementById("update-name").value = name;
+        document.getElementById("update-birthday").value = birthday;
+        document.getElementById("update-address").value = address;
+        document.getElementById("update-gender").value = gender;
+        document.getElementById("update-phone").value = phone;
+        document.getElementById("update-email").value = email;
+
+    }
+
+    function updatePatient() {
+        var id = $('#update-id').val()
+        var name = $('#update-name').val()
+        var birthday = $('#update-birthday').val()
+        var phone = $('#update-phone').val()
+        var gender = $('#update-gender').val()
+        var email = $('#update-email').val()
+        var address = $('#update-address').val()
+
+        var obj = {
+            'id': id,
+            'name': name,
+            'birthdate': birthday,
+            'gender': gender,
+            'address': address,
+            'phone': phone,
+            'email': email
+        }
+
+        fetch(baseURL + '/patients', {
+            headers: {
+                'Authorization': 'Basic ' + code,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify(obj)
+        })
+            .then(() => loadPatients())
+    }
+
+    function deletePatient() {
+        var id = $('#detail-id').val()
+
+        if (confirm('Do you want to delete?')) {
+            fetch(baseURL + '/patients/' + id, {
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                method: 'delete'
+            })
+                .then(() => loadPatients())
+        }
+    }
+
+    function searchPatient() {
+        var val = $('#search-bar').val()
+
+        var str = "";
+        if (document.getElementById("search-by").value == "1") str = "name="
+        else if (document.getElementById("search-by").value == "2") str = "id="
+        else if (document.getElementById("search-by").value == "3") str = "birthdate="
+
+        console.log(str + val)
+
+        if (val == "") loadPatients()
+        else (
+            fetch(baseURL + '/patients/search?' + str + val, {
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                method: 'get'
+            })
+                .then((res) => res.json())
+                .then((json) => {
+                    for (let i = table.rows.length - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+
+                    for (let i = 0; i < json.length; i++) {
+                        var newRow = table.insertRow(table.rows.length);
+
+                        var cel1 = newRow.insertCell(0);
+                        var cel2 = newRow.insertCell(1);
+                        var cel3 = newRow.insertCell(2);
+                        var cel4 = newRow.insertCell(3);
+                        var cel5 = newRow.insertCell(4);
+
+                        var str = `<div class="float-left" style="margin-right: 10px"> 
+                        <button onclick="displayPatient(${json[i].id}, '${json[i].name}', '${json[i].birthdate}', '${json[i].address}', '${json[i].gender}', '${json[i].phone}', '${json[i].email}')" type="submit" class="btn btn-outline-dark" data-toggle="modal" data-target="#patientDetailsModal">Details</button> 
+                        </div>
+                        <div class="float-left">
+                            <button type="submit" class="btn btn-outline-dark" onclick="window.location.href='visit.html?pid=${json[i].id}'">Add Visit</button>
+                        </div>`;
+
+                        cel1.innerHTML = json[i].id;
+                        cel2.innerHTML = json[i].name;
+                        cel3.innerHTML = json[i].birthdate;
+                        cel4.innerHTML = json[i].gender;
+                        cel5.innerHTML = str;
+                    }
+                })
+        )
+    }
+
+    function changeSearchBarStt() {
+        if (document.getElementById("search-by").value == "1") {
+            document.getElementById("search-bar").placeholder = "Patient name..."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "text"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else if (document.getElementById("search-by").value == "2") {
+            document.getElementById("search-bar").placeholder = "Patient ID..."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "number"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else if (document.getElementById("search-by").value == "3") {
+            document.getElementById("search-bar").placeholder = "Patient birthday..."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "date"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else {
+            //Status changed to Search by.. : disabling searching, reload patients
+            document.getElementById("search-bar").placeholder = ""
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "text"
+            document.getElementById("search-bar").disabled = true
+            document.getElementById("search-btn").disabled = true
+            loadPatients()
+        }
+    }
+
+    function validateEmail(email) {
+        var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(email);
+    }
+
+    function validatePhoneNumber(phone) {
+        var regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+        return regex.test(phone);
+    }
+
+    function checkCreateNewPatientForm() {
+        var name = $('#new-name').val()
+        var email = $('#new-email').val()
+        var address = $('#new-address').val()
+        var phone = $('#new-phone').val()
+
+        if (name == '') {
+            alert("Please fill in the patient name!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (phone == '') {
+            alert("Please fill in the patient phone number!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validatePhoneNumber(phone) == false) {
+            alert("Please type a valid Vietnam phone number!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (email == '') {
+            alert("Please fill in email!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validateEmail(email) == false) {
+            alert("Please type a valid email!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (address == '') {
+            alert("Please fill in the patient home address!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+
+        alert("Successful submission!")
+        doAdd()
+        return true
+    }
+
+    function checkUpdatePatientForm() {
+        var name = $('#update-name').val()
+        var email = $('#update-email').val()
+        var address = $('#update-address').val()
+        var phone = $('#update-phone').val()
+
+        if (name == '') {
+            alert("Please fill in your name!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (phone == '') {
+            alert("Please fill in your phone number!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validatePhoneNumber(phone) == false) {
+            alert("Please type a valid Vietnam phone number!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (email == '') {
+            alert("Please fill in email!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validateEmail(email) == false) {
+            alert("Please type a valid email!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (address == '') {
+            alert("Please fill in your home address!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+
+        alert("Successful submission!")
+        updatePatient()
+        return true
+    }
+
+    $("#search-bar").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: baseURL + "/patients/search",
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                dataType: "json",
+                data: "name=" + request.term,
+                success: function (data) {
+                    //alert(data)
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.id + ' - ' + item.name + ' - ' + item.birthdate,
+                            value: item.name
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var label = ui.item.label
+            var name = label.split('-')[1].trim()
+            $('#searchbar').val(name)
+        }
+    });
+
+    loadPatients()
+</script>
+
+</html>

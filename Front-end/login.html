@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body class="login-body" onload="clearStorage()">
+    <section>
+        <div>
+            <div class="wrapper">
+                <img src="http://maxsellerp.com/wp-content/uploads/2015/05/clinic-logo.gif" alt="Logo"
+                    class="round-logo-image">
+            </div>
+            <div class="container border-modifier bg-white login-container">
+                <div class="row justify-content-center login-padding-modifier">
+                    <h1>LOGIN</h1>
+                </div>
+                <hr class="hr-modifier">
+                <div class="form-group row">
+                    <label for="UserAccount" class="col-sm-2 col-md-2 col-form-label text-align-right">User
+                        Account</label>
+                    <div class="col-sm-10 col-md-10">
+                        <input type="text" class="form-control" id="username" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="Password" class="col-sm-2 col-md-2 col-form-label text-align-right">Password</label>
+                    <div class="col-sm-10 col-md-10">
+                        <input type="text" class="form-control" id="password" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <button type="button" class="btn btn-secondary" style="margin: auto"
+                        onclick="login()">Login</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
+<script>
+    baseURL = "http://localhost:8080"
+
+    function login() {
+
+        if ($('#username').val() == "") {
+            alert("Please fill in your User Name")
+            return false
+        }
+        else if ($('#password').val() == "") {
+            alert("Please fill in your Password")
+            return false
+        }
+
+        fetch(baseURL + '/userroles/search?username=' + $('#username').val(), {
+            method: 'get'
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.length == 0) {
+                    alert('This user name does not exist!')
+                    return false
+                }
+                //user name is unique
+                if (json[0].user.password !== $('#password').val()) {
+                    alert('Wrong password!')
+                    return false
+                }
+                bool = true
+                sessionStorage.username = $('#username').val()
+                sessionStorage.password = $('#password').val()
+                sessionStorage.setItem("role", JSON.stringify(json));
+                alert('Sign in successfully!!!')
+                window.location.href = 'visit.html'
+                return true
+            })
+    }
+
+    function clearStorage(){
+        sessionStorage.clear();
+    }
+</script>

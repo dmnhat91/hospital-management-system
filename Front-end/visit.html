@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body class="smooth-scroll">
+    <div class="container-fluid">
+        <nav class="my-nav-bar navbar navbar-expand-md navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#"><label class="logo"
+                        style="font-size: 40px; font-family: Comic Sans MS">CLINIC</label></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="patient.html" style="font-size: 20px">Patient</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="active nav-link" href="visit.html" style="font-size: 20px">Visit</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="drug.html" style="font-size: 20px">Drug</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="icd.html" style="font-size: 20px">ICD</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="medicalService.html" style="font-size: 20px">Medical Service</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="login.html" style="font-size: 20px">Sign Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br><br><br><br><br>
+
+        <div class="container" style="margin-bottom: 40px">
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1" style="font-weight: bold; margin-right: 5px">For new
+                            patient:</label>
+                        <button type="submit" class="btn btn-outline-dark" data-toggle="modal"
+                            data-target="#createVisitForNewPatientModal">Create visit</button>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <div class="form-inline float-right">
+                        <label for="exampleFormControlInput1" style="font-weight: bold; margin-right: 5px">For return
+                            patient:</label>
+                        <input id="search-return-name" type="text" class="form-control" placeholder="Patient name.."
+                            name="search-content">
+                        <input id="return-patient-id" type="text" class="form-control" placeholder="Patient ID.."
+                            name="search-content">
+                        <button type="submit" class="btn btn-outline-dark" data-toggle="modal"
+                            data-target="#createVisitForReturnPatientModal"
+                            onclick="openSubmitVisitForReturnPatientWindow()">Create visit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <div class="col-lg-6 col-md-12">
+                    <div class="form-inline">
+                        <select id="search-by" onchange="changeSearchBarStt()" class="browser-default custom-select">
+                            <option selected>Search by..</option>
+                            <option value="1">Search by patientID</option>
+                            <option value="2">Search by day</option>
+                            <option value="3">Search by patient name</option>
+                        </select>
+                        <input id="search-bar" type="email" class="form-control" placeholder="" name="search-content"
+                            disabled style="width:200px">
+                        <button id="search-btn" type="submit" class="btn btn-outline-dark" onclick="searchVisits()"
+                            disabled>Search</button>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="form-inline float-right">
+                        <label for="exampleFormControlInput1" style="font-weight: bold; margin-right: 5px">From:</label>
+                        <input id="search-from-date" type="date" class="form-control" placeholder=""
+                            name="search-content" style="width:175px">
+                        <label for="exampleFormControlInput1"
+                            style="font-weight: bold; margin-right: 5px; margin-left: 5px">to</label>
+                        <input id="search-to-date" type="date" class="form-control" placeholder="" name="search-content"
+                            style="width:175px">
+                        <button id="search-btn" type="submit" class="btn btn-outline-dark"
+                            onclick="searchVisitsByDates()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container smooth-scroll">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Visit ID:</th>
+                        <th>Patient ID:</th>
+                        <th>Visit Date:</th>
+                        <th>Visit Time:</th>
+                        <th>Doctor</th>
+                        <th>Action:</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- CREATE VISIT FOR NEW PATIENT MODAL -->
+        <div class="modal" id="createVisitForNewPatientModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Visit Information:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <h5>Patient:</h5>
+                            <section class="user-info"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 10px; background-color: white; border:1px solid black">
+                                <fieldset>
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Patient Name:</label>
+                                            <input id="new-patient-name" type="text" class="form-control"
+                                                placeholder="Patient Name.." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="birthday">Birthday:</label>
+                                            <input id="new-patient-birthday" type="date" class="form-control"
+                                                placeholder="" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-5 col-md-12">
+                                                <label for="exampleFormControlInput1">Phone:</label>
+                                                <input id="new-patient-phone" type="phone" class="form-control"
+                                                    placeholder="Phone Number.." required>
+                                            </div>
+                                            <div class="form-group col-lg-5 col-md-12">
+                                                <label for="email">Email address:</label>
+                                                <input id="new-patient-email" type="email" class="form-control"
+                                                    placeholder="name@example.com" required>
+                                            </div>
+                                            <div class="form-group col-lg-2 col-md-12">
+                                                <label for="exampleFormControlInput1">Gender:</label>
+                                                <select id="new-patient-gender" class="browser-default custom-select">
+                                                    <option selected>Male</option>
+                                                    <option value="1">Female</option>
+                                                    <option value="2">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Address:</label>
+                                            <input id="new-patient-address" type="text" class="form-control"
+                                                placeholder="Address.." required>
+                                        </div>
+                                    </form>
+                                </fieldset>
+                            </section>
+
+                            <h5>Visit:</h5>
+                            <section class="user-info"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; background-color: white; border:1px solid black">
+                                <form>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-md-12">
+                                            <label for="exampleFormControlInput1">Visit Date:</label>
+                                            <input id="newp-visit-date" type="date" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-12">
+                                            <label for="exampleFormControlInput1">Visit Time:</label>
+                                            <input id="newp-visit-time" type="text" class="form-control"
+                                                placeholder="hh:mm:ss" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Doctor:</label>
+                                        <input id="newp-doctor" type="text" class="form-control"
+                                            placeholder="Doctor Name.." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Problems:</label>
+                                        <input id="newp-problems" type="text" class="form-control"
+                                            placeholder="Type in your problems.." required>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="newp-submit" type="submit" class="btn btn-dark" data-dismiss="modal"
+                            onclick="checkCreateVisitForNewPatientForm()">Submit</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CREATE VISIT FOR RETURN PATIENT MODAL -->
+        <div class="modal" id="createVisitForReturnPatientModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Visit Information:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <h5 id="rp-id-title">Patient ID:</h5>
+                            <section class="user-info"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 10px; background-color: white; border:1px solid black">
+                                <fieldset disabled>
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Patient Name:</label>
+                                            <input id="return-patient-name" type="text" class="form-control"
+                                                placeholder="Patient Name.." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="birthday">Birthday:</label>
+                                            <input id="return-patient-birthday" type="date" class="form-control"
+                                                placeholder="" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-5 col-md-12">
+                                                <label for="exampleFormControlInput1">Phone:</label>
+                                                <input id="return-patient-phone" type="phone" class="form-control"
+                                                    placeholder="Phone Number.." required>
+                                            </div>
+                                            <div class="form-group col-lg-5 col-md-12">
+                                                <label for="email">Email address:</label>
+                                                <input id="return-patient-email" type="email" class="form-control"
+                                                    placeholder="name@example.com" required>
+                                            </div>
+                                            <div class="form-group col-lg-2 col-md-12">
+                                                <label for="exampleFormControlInput1">Gender:</label>
+                                                <select id="return-patient-gender"
+                                                    class="browser-default custom-select">
+                                                    <option selected>Male</option>
+                                                    <option value="1">Female</option>
+                                                    <option value="2">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Address:</label>
+                                            <input id="return-patient-address" type="text" class="form-control"
+                                                placeholder="Address.." required>
+                                        </div>
+                                    </form>
+                                </fieldset>
+                            </section>
+
+                            <h5>Visit:</h5>
+                            <section class="user-info"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; background-color: white; border:1px solid black">
+                                <form>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-md-12">
+                                            <label for="exampleFormControlInput1">Visit Date:</label>
+                                            <input id="rp-visit-date" type="date" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-12">
+                                            <label for="exampleFormControlInput1">Visit Time:</label>
+                                            <input id="rp-visit-time" type="text" class="form-control"
+                                                placeholder="hh:mm:ss" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Doctor:</label>
+                                        <input id="rp-doctor" type="text" class="form-control"
+                                            placeholder="Doctor Name.." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Problems:</label>
+                                        <input id="rp-problems" type="text" class="form-control"
+                                            placeholder="Type in your problems.." required>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="submit" type="submit" class="btn btn-dark" data-dismiss="modal"
+                            onclick="checkCreateVisitForReturnPatientForm()">Submit</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    baseURL = "http://localhost:8080"
+    var username = sessionStorage.username
+    var password = sessionStorage.password
+    var code = window.btoa(`${username}:${password}`)
+
+    function loadVisits() {
+        var table = document.getElementsByTagName('table')[0]
+
+        for (let i = table.rows.length - 1; i > 0; i--) {
+            table.deleteRow(i);
+        }
+
+        fetch(baseURL + '/visits')
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var newRow = table.insertRow(table.rows.length);
+
+                    var cel1 = newRow.insertCell(0);
+                    var cel2 = newRow.insertCell(1);
+                    var cel3 = newRow.insertCell(2);
+                    var cel4 = newRow.insertCell(3);
+                    var cel5 = newRow.insertCell(4);
+                    var cel6 = newRow.insertCell(5);
+
+                    cel1.innerHTML = json[i].id;
+                    cel2.innerHTML = json[i].patient.id;
+                    cel3.innerHTML = json[i].visitDate;
+                    cel4.innerHTML = json[i].visitTime;
+                    cel5.innerHTML = json[i].doctor;
+                    cel6.innerHTML = `<div class="float-left" style="margin-right: 10px">
+                        <button onclick="window.location.href='visitDetails.html?visitId=${json[i].id}'"
+                        type = "submit" class="btn btn-outline-dark">Details</button>
+                        </div >
+                        <div class="float-left">
+                        <button type="submit" class="btn btn-outline-dark" onclick="window.location.href='prescription.html?visitId=${json[i].id}'">
+                        Add Prescription</button>
+                        </div>`;
+                }
+            })
+    }
+
+    function submitVisitForNewPatient() {
+        var pname = $('#new-patient-name').val()
+        var pbirthday = $('#new-patient-birthday').val()
+        var pphone = $('#new-patient-phone').val()
+        var pgender = $('#new-patient-gender').val()
+        var pemail = $('#new-patient-email').val()
+        var paddress = $('#new-patient-address').val()
+
+        var visitdate = $('#newp-visit-date').val()
+        var visittime = $('#newp-visit-time').val()
+        var doctor = $('#newp-doctor').val()
+        var problems = $('#newp-problems').val()
+
+        //Clear input values
+        document.getElementById("new-patient-name").value = ''
+        document.getElementById("new-patient-birthday").value = ''
+        document.getElementById("new-patient-phone").value = ''
+        document.getElementById("new-patient-gender").value = 'Male'
+        document.getElementById("new-patient-email").value = ''
+        document.getElementById("new-patient-address").value = ''
+        document.getElementById("newp-visit-date").value = ''
+        document.getElementById("newp-visit-time").value = ''
+        document.getElementById("newp-doctor").value = ''
+        document.getElementById("newp-problems").value = ''
+
+        var obj = {
+            'visitDate': visitdate,
+            'visitTime': visittime,
+            'problems': problems,
+            'doctor': doctor,
+
+            'patient': {
+                'name': pname,
+                'birthdate': pbirthday,
+                'gender': pgender,
+                'phone': pphone,
+                'address': paddress,
+                'email': pemail
+            }
+        }
+
+        fetch(baseURL + '/visits', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(obj)
+        })
+            .then(() => loadVisits())
+    }
+
+    function openSubmitVisitForReturnPatientWindow() {
+        var returnPatientID = $('#return-patient-id').val()
+
+        fetch(baseURL + '/patients/search?id=' + returnPatientID, {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                document.getElementById("rp-id-title").innerHTML = "Patient ID: " + returnPatientID
+                document.getElementById("return-patient-name").value = json[0].name
+                document.getElementById("return-patient-birthday").value = json[0].birthdate;
+                document.getElementById("return-patient-address").value = json[0].address;
+                document.getElementById("return-patient-gender").value = json[0].gender;
+                document.getElementById("return-patient-phone").value = json[0].phone;
+                document.getElementById("return-patient-email").value = json[0].email;
+            })
+    }
+
+    function submitVisitForReturnPatient() {
+        var visitdate = $('#rp-visit-date').val()
+        var visittime = $('#rp-visit-time').val()
+        var doctor = $('#rp-doctor').val()
+        var problems = $('#rp-problems').val()
+        var patientID = $('#return-patient-id').val()
+
+        //Clear input values
+        document.getElementById("rp-visit-date").value = ''
+        document.getElementById("rp-visit-time").value = ''
+        document.getElementById("rp-doctor").value = ''
+        document.getElementById("rp-problems").value = ''
+
+        var obj = {
+            'visitDate': visitdate,
+            'visitTime': visittime,
+            'problems': problems,
+            'doctor': doctor,
+
+            'patient': {
+                'id': patientID
+            }
+        }
+
+        fetch(baseURL + '/visits', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(obj)
+        })
+            .then(() => loadVisits())
+    }
+
+    function changeSearchBarStt() {
+        if (document.getElementById("search-by").value == "1") {
+            document.getElementById("search-bar").placeholder = "Patient ID..."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "number"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else if (document.getElementById("search-by").value == "2") {
+            document.getElementById("search-bar").placeholder = ""
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "date"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else if (document.getElementById("search-by").value == "3") {
+            document.getElementById("search-bar").placeholder = "Patient name.."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "text"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else {
+            //Status changed to Search by.. : disabling searching, reload patients
+            document.getElementById("search-bar").placeholder = ""
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "text"
+            document.getElementById("search-bar").disabled = true
+            document.getElementById("search-btn").disabled = true
+            loadVisits()
+        }
+    }
+
+    function searchVisitsByDates() {
+        var fromDate = $('#search-from-date').val()
+        var toDate = $('#search-to-date').val()
+        if (fromDate == "" || toDate == "") loadVisits()
+        else {
+            fetch(baseURL + '/visits/search?' + 'startDate=' + fromDate + '&endDate=' + toDate, {
+                method: 'get'
+            })
+                .then((res) => res.json())
+                .then((json) => {
+                    var table = document.getElementsByTagName('table')[0]
+
+                    for (let i = table.rows.length - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+
+                    for (let i = 0; i < json.length; i++) {
+                        var newRow = table.insertRow(table.rows.length);
+
+                        var cel1 = newRow.insertCell(0);
+                        var cel2 = newRow.insertCell(1);
+                        var cel3 = newRow.insertCell(2);
+                        var cel4 = newRow.insertCell(3);
+                        var cel5 = newRow.insertCell(4);
+                        var cel6 = newRow.insertCell(5);
+
+                        cel1.innerHTML = json[i].id;
+                        cel2.innerHTML = json[i].patient.id;
+                        cel3.innerHTML = json[i].visitDate;
+                        cel4.innerHTML = json[i].visitTime;
+                        cel5.innerHTML = json[i].doctor;
+                        cel6.innerHTML = `<div class="float-left" style="margin-right: 10px">
+                        <button onclick="window.location.href='visitDetails.html?visitId=${json[i].id}'"
+                        type = "submit" class="btn btn-outline-dark">Details</button>
+                        </div >
+                        <div class="float-left">
+                        <button type="submit" class="btn btn-outline-dark" onclick="window.location.href='prescription.html?visitId=${json[i].id}'">
+                        Add Prescription</button>
+                        </div>`;
+                    }
+                })
+        }
+    }
+
+    function searchVisits() {
+        var val = $('#search-bar').val()
+
+        if (val == "") loadVisits()
+        else {
+            var str = "";
+            if (document.getElementById("search-by").value == "1") str = "pid="
+            else if (document.getElementById("search-by").value == "2") str = "date="
+            else if (document.getElementById("search-by").value == "3") str = "pname="
+
+            fetch(baseURL + '/visits/search?' + str + val, {
+                method: 'get'
+            })
+                .then((res) => res.json())
+                .then((json) => {
+                    var table = document.getElementsByTagName('table')[0]
+
+                    for (let i = table.rows.length - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+
+                    for (let i = 0; i < json.length; i++) {
+                        var newRow = table.insertRow(table.rows.length);
+
+                        var cel1 = newRow.insertCell(0);
+                        var cel2 = newRow.insertCell(1);
+                        var cel3 = newRow.insertCell(2);
+                        var cel4 = newRow.insertCell(3);
+                        var cel5 = newRow.insertCell(4);
+                        var cel6 = newRow.insertCell(5);
+
+                        cel1.innerHTML = json[i].id;
+                        cel2.innerHTML = json[i].patient.id;
+                        cel3.innerHTML = json[i].visitDate;
+                        cel4.innerHTML = json[i].visitTime;
+                        cel5.innerHTML = json[i].doctor;
+                        cel6.innerHTML = `<div class="float-left" style="margin-right: 10px">
+                        <button onclick="window.location.href='visitDetails.html?visitId=${json[i].id}'"
+                        type = "submit" class="btn btn-outline-dark">Details</button>
+                        </div >
+                        <div class="float-left">
+                        <button type="submit" class="btn btn-outline-dark" onclick="window.location.href='prescription.html?visitId=${json[i].id}'">
+                        Add Prescription</button>
+                        </div>`;
+                    }
+                })
+        }
+    }
+
+    function processURL() {
+        var parameters = location.search.substring(1).split("=");
+        if (typeof parameters[1] !== "undefined") {
+            document.getElementById("return-patient-id").value = parameters[1]
+            openSubmitVisitForReturnPatientWindow()
+            $('#createVisitForReturnPatientModal').modal('show')
+        }
+    }
+
+    function validateEmail(email) {
+        var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(email);
+    }
+
+    function validatePhoneNumber(phone) {
+        var regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+        return regex.test(phone);
+    }
+
+    function validateTime(time) {
+        var regex = /(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)/g;
+        return regex.test(time);
+    }
+
+    function checkCreateVisitForNewPatientForm() {
+        var name = $('#new-patient-name').val()
+        var email = $('#new-patient-email').val()
+        var address = $('#new-patient-address').val()
+        var phone = $('#new-patient-phone').val()
+
+        var visitTime = $('#newp-visit-time').val()
+        var doctor = $('#newp-doctor').val()
+        var problems = $('#newp-problems').val()
+
+        if (name == '') {
+            alert("Please fill in the patient name!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (phone == '') {
+            alert("Please fill in the patient phone number!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validatePhoneNumber(phone) == false) {
+            alert("Please type a valid Vietnam phone number!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (email == '') {
+            alert("Please fill in email!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validateEmail(email) == false) {
+            alert("Please type a valid email!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (address == '') {
+            alert("Please fill in the patient home address!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (visitTime == '') {
+            alert("Please fill in the patient visit time!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validateTime(visitTime) == false) {
+            alert("Please type a valid visit time!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (doctor == '') {
+            alert("Please fill in the doctor!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (problems == '') {
+            alert("Please fill in the patient problems!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+
+        alert("Successful submission!")
+        submitVisitForNewPatient()
+        return true
+    }
+
+    function checkCreateVisitForReturnPatientForm() {
+
+        var visitTime = $('#rp-visit-time').val()
+        var doctor = $('#rp-doctor').val()
+        var problems = $('#rp-problems').val()
+
+        if (visitTime == '') {
+            alert("Please fill in the patient visit time!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (validateTime(visitTime) == false) {
+            alert("Please type a valid visit time!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (doctor == '') {
+            alert("Please fill in the doctor!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (problems == '') {
+            alert("Please fill in the patient problems!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+
+        alert("Successful submission!")
+        submitVisitForReturnPatient()
+        return true
+    }
+
+    $("#search-return-name").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: baseURL + "/patients/search",
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                dataType: "json",
+                data: "name=" + request.term,
+                success: function (data) {
+                    //alert(data)
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.id + ' - ' + item.name,
+                            value: item.name
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var label = ui.item.label
+            var id = label.split('-')[0].trim()
+            var name = label.split('-')[1].trim()
+            $('#return-patient-id').val(id)
+            $('#search-return-name').val(name)
+        }
+    });
+
+    $("#return-patient-id").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: baseURL + "/patients/search",
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                dataType: "json",
+                data: "id=" + request.term,
+                success: function (data) {
+                    //alert(data)
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.id + ' - ' + item.name,
+                            value: item.id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var label = ui.item.label
+            var id = label.split('-')[0].trim()
+            var name = label.split('-')[1].trim()
+            $('#return-patient-id').val(id)
+            $('#search-return-name').val(name)
+        }
+    });
+
+    $("#search-bar").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: baseURL + "/patients/search",
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                dataType: "json",
+                data: "name=" + request.term,
+                success: function (data) {
+                    //alert(data)
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.id + ' - ' + item.name,
+                            value: item.name
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var label = ui.item.label
+            var name = label.split('-')[1].trim()
+            $('#search-bar').val(name)
+        }
+    });
+
+    processURL()
+
+    loadVisits()
+</script>

@@ -1,0 +1,148 @@
+/*Login Style*/
+.login-body {
+    background-color: #C0C0C0;
+}
+
+h1 {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.5em;
+}
+
+.hr-modifier {
+    background-color: black;
+    height: 1px;
+}
+
+.border-modifier {
+    border-color: #494747;
+    border-style: solid;
+    border-width: 0.01em;
+    width: 30%;
+    margin: auto;
+}
+
+.login-padding-modifier {
+    padding-bottom: 0.1em;
+    padding-top: 4em;
+}
+
+.text-align-right {
+    text-align: center;
+}
+
+.round-logo-image {
+    border-radius: 50%;
+    width: 8em;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: 3em;
+    z-index: 1;
+}
+
+/*Prescription page*/
+
+
+/*Other pages*/
+.validate-result {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: red;
+
+}
+
+/*Drug table*/
+.drug-table,
+.drug-table td,
+.drug-table th {
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.drug-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.drug-table td,
+.drug-table th {
+    padding: 15px;
+    font-size: 90%;
+}
+
+.small-cell-width {
+    width: 10%;
+}
+
+.medium-cell-width {
+    width: 15%;
+}
+
+.large-cell-width {
+    width: 20%;
+}
+
+/*Sample*/
+.about-body {
+    background-color: #21ddfb;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.user-info {
+    background-color: #333;
+    margin: auto;
+    width: 70%;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 70%;
+    /*
+    padding: 20px 50px;
+    width: 70%;
+    margin: 0 auto;
+    */
+
+}
+
+.user-info h1 {
+    color: white;
+    font-size: 2em;
+    width: 100%;
+    padding-bottom: 4px;
+}
+
+.noti-label {
+    color: white;
+}
+
+.login-container {
+    border-radius: 10px;
+    border: 1px solid #000;
+}
+
+/*Navigation Bar*/
+.my-nav-bar {
+    background-color: black;
+    color: white;
+}
+
+.my-nav-bar a:hover {
+    color: white;
+}
+
+.my-nav-bar a.active {
+    background-color: #343a40;
+    color: white;
+    border-radius: 10px;
+}

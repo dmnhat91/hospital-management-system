@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body class="smooth-scroll">
+    <div class="container-fluid">
+
+        <nav class="my-nav-bar navbar navbar-expand-md navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#"><label class="logo"
+                        style="font-size: 40px; font-family: Comic Sans MS">CLINIC</label></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="patient.html" style="font-size: 20px">Patient</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="visit.html" style="font-size: 20px">Visit</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="active nav-link" href="drug.html" style="font-size: 20px">Drug</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="icd.html" style="font-size: 20px">ICD</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="medicalService.html" style="font-size: 20px">Medical Service</a>
+                        </li>
+                        <li class="nav-item  mr-4">
+                            <a class="nav-link" href="login.html" style="font-size: 20px">Sign Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br><br><br><br><br>
+
+
+        <div class="container" style="margin-bottom: 40px">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <button id="createNewDrugButton" type="submit" class="btn btn-outline-dark" data-toggle="modal"
+                        data-target="#createDrugModal">Create new drug</button>
+                    <!-- <div class="validate-result">
+                    </div> -->
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="form-inline">
+                        <select id="search-by" onchange="changeSearchBarStt()" class="browser-default custom-select">
+                            <option selected>Search by..</option>
+                            <option value="1">Search by name</option>
+                            <option value="2">Search by drugID</option>
+                        </select>
+                        <input id="search-bar" type="text" class="form-control" placeholder="" name="search-content"
+                            disabled>
+                        <button id="search-btn" onclick="searchDrug()" type="submit" class="btn btn-outline-dark"
+                            disabled>Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container smooth-scroll">
+            <table id="table" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Drug ID</th>
+                        <th>Drug Name</th>
+                        <th>Unit</th>
+                        <th>Usage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- CREATE DRUG MODAL -->
+        <div class="modal" id="createDrugModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Drug Information:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Drug Name:</label>
+                                        <input id="new-name" type="text" class="form-control" placeholder="Drug Name.."
+                                            required>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-9 col-md-12">
+                                            <label for="exampleFormControlInput1">Usage:</label>
+                                            <input id="new-usage" type="text" class="form-control" placeholder="Usage.."
+                                                required>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-12">
+                                            <label for="exampleFormControlInput1">Unit:</label>
+                                            <select id="new-unit" class="browser-default custom-select">
+                                                <option value="Piece" selected>Piece</option>
+                                                <option value="Roll">Roll</option>
+                                                <option value="Pill">Pill</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Price:</label>
+                                        <input id="new-price" type="number" class="form-control" placeholder="Price.."
+                                            required>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button onclick="checkCreateDrugForm()" id="submit" type="submit" class="btn btn-dark"
+                            data-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DRUG DETAILS MODAL -->
+        <div class="modal" id="drugDetailsModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Drug Details:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <form>
+                                    <fieldset id="details-fieldset" disabled>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Drug ID:</label>
+                                            <input id="detail-id" type="text" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Drug Name:</label>
+                                            <input id="detail-name" type="text" class="form-control" placeholder=""
+                                                required>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-9 col-md-12">
+                                                <label for="exampleFormControlInput1">Usage:</label>
+                                                <input id="detail-usage" type="text" class="form-control" placeholder=""
+                                                    required>
+                                            </div>
+                                            <div class="form-group col-lg-3 col-md-12">
+                                                <label for="exampleFormControlInput1">Unit:</label>
+                                                <select id="detail-unit" class="browser-default custom-select">
+                                                    <option value="Piece" selected>Piece</option>
+                                                    <option value="Roll">Roll</option>
+                                                    <option value="Pill">Pill</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Price:</label>
+                                            <input id="detail-price" type="number" class="form-control"
+                                                placeholder="Price.." required>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="updateDrugButton" type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+                            data-target="#updateDrugModal">Update</button>
+                        <button id="deleteDrugButton" onclick="deleteDrug()" type="button" data-dismiss="modal"
+                            class="btn btn-dark">Delete</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPDATE DRUG MODAL -->
+        <div class="modal" id="updateDrugModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Drug:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Drug ID:</label>
+                                        <input id="update-id" type="text" class="form-control" placeholder="Drug ID.."
+                                            disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Drug Name:</label>
+                                        <input id="update-name" type="text" class="form-control"
+                                            placeholder="Drug Name.." required>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-9 col-md-12">
+                                            <label for="exampleFormControlInput1">Usage:</label>
+                                            <input id="update-usage" type="text" class="form-control"
+                                                placeholder="Usage.." required>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-12">
+                                            <label for="exampleFormControlInput1">Unit:</label>
+                                            <select id="update-unit" class="browser-default custom-select">
+                                                <option value="Piece" selected>Piece</option>
+                                                <option value="Roll">Roll</option>
+                                                <option value="Pill">Pill</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Price:</label>
+                                        <input id="update-price" type="number" class="form-control"
+                                            placeholder="Price.." required>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button onclick="checkUpdateDrugForm()" type="button" class="btn btn-dark" data-dismiss="modal"
+                            data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+                            data-target="#drugDetailsModal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    baseURL = "http://localhost:8080"
+    var username = sessionStorage.username
+    var password = sessionStorage.password
+    var code = window.btoa(`${username}:${password}`)
+
+    function loadDrugs() {
+        var table = document.getElementsByTagName('table')[0]
+
+        //Impossible to delete from top to bot --> have to delete from bot to top
+        for (let i = table.rows.length - 1; i > 0; i--) {
+            table.deleteRow(i);
+        }
+
+        fetch(baseURL + '/drugs', {
+           headers: {
+               'Authorization': 'Basic ' + code
+           }
+       })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var newRow = table.insertRow(table.rows.length);
+
+                    var cel1 = newRow.insertCell(0);
+                    var cel2 = newRow.insertCell(1);
+                    var cel3 = newRow.insertCell(2);
+                    var cel4 = newRow.insertCell(3);
+                    var cel5 = newRow.insertCell(4);
+
+                    var str = `<div class="float-left" style="margin-right: 10px"> 
+                        <button onclick="displayDrug(${json[i].id}, '${json[i].name}', '${json[i].usage}', '${json[i].unit}',${json[i].price})" type="submit" class="btn btn-outline-dark" data-toggle="modal" data-target="#drugDetailsModal">Details</button> 
+                        </div>`;
+
+                    cel1.innerHTML = json[i].id;
+                    cel2.innerHTML = json[i].name;
+                    cel3.innerHTML = json[i].unit;
+                    cel4.innerHTML = json[i].usage;
+                    cel5.innerHTML = str;
+
+
+                }
+            })
+
+    }
+
+    function doAdd() {
+        var name = $('#new-name').val()
+        var usage = $('#new-usage').val()
+        var unit = $('#new-unit').val()
+        var price = $('#new-price').val()
+
+        //Clear input values
+        document.getElementById("new-name").value = ''
+        document.getElementById("new-usage").value = ''
+        document.getElementById("new-unit").value = 'Piece'
+        document.getElementById("new-price").value = ''
+
+        var obj = {
+            'name': name,
+            'usage': usage,
+            'unit': unit,
+            'price': price
+        }
+
+        fetch(baseURL + '/drugs', {
+            headers: {
+                'Authorization': 'Basic ' + code,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(obj)
+        })
+            .then(() => loadDrugs())
+
+    }
+
+    function checkCreateDrugForm() {
+        var name = $('#new-name').val()
+        var usage = $('#new-usage').val()
+        var price = $('#new-price').val()
+
+        if (name == '') {
+            alert("Please fill in the drug name!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (usage == '') {
+            alert("Please fill in the drug usage!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (price == '') {
+            alert("Please fill in the drug usage!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (isNaN(price)) {
+            alert("Please fill in a valid price of drug!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (price < 0) {
+            alert("Please fill in a valid price of drug!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+
+        alert("Successful submission!")
+        doAdd()
+        return true
+    }
+
+    function checkUpdateDrugForm() {
+        var name = $('#update-name').val()
+        var usage = $('#update-usage').val()
+        var price = $('#update-price').val()
+
+        if (name == '') {
+            alert("Please fill in the drug name!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (usage == '') {
+            alert("Please fill in the drug usage!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (isNaN(price)) {
+            alert("Please fill in a valid price of drug!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+        if (price < 0) {
+            alert("Please fill in a valid price of drug!")
+            event.preventDefault();
+            event.stopPropagation();
+            return false
+        }
+
+        alert("Successful submission!")
+        updateDrug()
+        return true
+    }
+
+    function displayDrug(id, name, usage, unit, price) {
+
+        document.getElementById("detail-id").value = id;
+        document.getElementById("detail-name").value = name;
+        document.getElementById("detail-usage").value = usage;
+        document.getElementById("detail-unit").value = unit;
+        document.getElementById("detail-price").value = price;
+
+        document.getElementById("update-id").value = id;
+        document.getElementById("update-name").value = name;
+        document.getElementById("update-usage").value = usage;
+        document.getElementById("update-unit").value = unit;
+        document.getElementById("update-price").value = price;
+
+    }
+
+    function updateDrug() {
+        var id = $('#update-id').val()
+        var name = $('#update-name').val()
+        var usage = $('#update-usage').val()
+        var unit = $('#update-unit').val()
+        var price = $('#update-price').val()
+
+        var obj = {
+            'id': id,
+            'name': name,
+            'usage': usage,
+            'unit': unit,
+            'price': price
+        }
+
+        fetch(baseURL + '/drugs', {
+            headers: {
+                'Authorization': 'Basic ' + code,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify(obj)
+        })
+            .then(() => loadDrugs())
+    }
+
+    function deleteDrug() {
+        var id = $('#detail-id').val()
+
+        if (confirm('Do you want to delete?')) {
+            fetch(baseURL + '/drugs/' + id, {
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                method: 'delete'
+            })
+                .then(() => loadDrugs())
+        }
+    }
+
+    function searchDrug() {
+        var val = $('#search-bar').val()
+
+        var str = "";
+        if (document.getElementById("search-by").value == "1") str = "name="
+        else if (document.getElementById("search-by").value == "2") str = "id="
+
+        if (val == "") loadDrugs()
+        else (
+            fetch(baseURL + '/drugs/search?' + str + val, {
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                method: 'get'
+            })
+                .then((res) => res.json())
+                .then((json) => {
+                    for (let i = table.rows.length - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+
+                    for (let i = 0; i < json.length; i++) {
+                        var newRow = table.insertRow(table.rows.length);
+
+                        var cel1 = newRow.insertCell(0);
+                        var cel2 = newRow.insertCell(1);
+                        var cel3 = newRow.insertCell(2);
+                        var cel4 = newRow.insertCell(3);
+                        var cel5 = newRow.insertCell(4);
+
+                        var str = `<div class="float-left" style="margin-right: 10px"> 
+                            <button onclick="displayDrug(${json[i].id}, '${json[i].name}', '${json[i].usage}', '${json[i].unit}',${json[i].price})" type="submit" class="btn btn-outline-dark" data-toggle="modal" data-target="#drugDetailsModal">Details</button> 
+                            </div>`;
+
+                        cel1.innerHTML = json[i].id;
+                        cel2.innerHTML = json[i].name;
+                        cel3.innerHTML = json[i].unit;
+                        cel4.innerHTML = json[i].usage;
+                        cel5.innerHTML = str;
+                    }
+                })
+        )
+    }
+
+    function changeSearchBarStt() {
+        if (document.getElementById("search-by").value == "1") {
+            document.getElementById("search-bar").placeholder = "Drug name..."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "text"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else if (document.getElementById("search-by").value == "2") {
+            document.getElementById("search-bar").placeholder = "Drug ID..."
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "number"
+            document.getElementById("search-bar").disabled = false
+            document.getElementById("search-btn").disabled = false
+        } else {
+            document.getElementById("search-bar").placeholder = ""
+            document.getElementById("search-bar").value = ""
+            document.getElementById("search-bar").type = "text"
+            document.getElementById("search-bar").disabled = true
+            document.getElementById("search-btn").disabled = true
+            loadDrugs()
+        }
+    }
+
+    // function validate() {
+    //     if (document.getElementById("new-price").value < 0) return false;
+    //     return true;
+    // }
+    $("#search-bar").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: baseURL + "/drugs/search",
+                headers: {
+                    'Authorization': 'Basic ' + code
+                },
+                dataType: "json",
+                data: "name=" + request.term,
+                success: function (data) {
+                    //alert(data)
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.id + ' - ' + item.name,
+                            value: item.name
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var label = ui.item.label
+            var name = label.split('-')[1].trim()
+            $('#search-bar').val(name)
+        }
+    });
+
+    function checkRole(){
+        var retrievedRoles = sessionStorage.getItem("role")
+        var roles = JSON.parse(retrievedRoles)
+        // console.log(roles)
+        var isUser = false
+        var isAdmin = false
+        for (let i = 0; i < roles.length; i++){
+            if(roles[i].role.authority == "ROLE_USER") isUser = true
+            if(roles[i].role.authority == "ROLE_ADMIN") isAdmin = true
+        }
+        if(isAdmin == false){
+            document.getElementById("createNewDrugButton").disabled = true
+            document.getElementById("updateDrugButton").disabled = true
+            document.getElementById("deleteDrugButton").disabled = true
+            console.log("user only")
+        }
+        else{
+            document.getElementById("createNewDrugButton").disabled = false
+            document.getElementById("updateDrugButton").disabled = false
+            document.getElementById("deleteDrugButton").disabled = false
+        }
+    }
+
+    checkRole()
+
+    loadDrugs()
+</script>
+
+</html>

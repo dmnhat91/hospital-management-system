@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prescription</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body class="smooth-scroll">
+    <div class="container-fluid">
+        <h1 style="font-size: 40px">VISIT DETAILS</h1>
+
+        <div class="container-fluid" style="width: 80%; margin-bottom: 5em;">
+            <h5>Patient information:</h5>
+            <section class="user-info"
+                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 10px; background-color: white; border:1px solid black">
+                <form>
+                    <div class="row">
+                        <div class="form-group col-lg-2 col-md-12">
+                            <label for="exampleFormControlInput1">Visit ID:</label>
+                            <input id="create-visit-id" type="number" class="form-control" placeholder="Visit ID"
+                                onchange="displayVisit()" disabled>
+                        </div>
+                        <div class="form-group col-lg-5 col-md-6">
+                            <label for="exampleFormControlInput1">Visit Date:</label>
+                            <input id="create-visit-date" type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group col-lg-5 col-md-6">
+                            <label for="exampleFormControlInput1">Visit Time:</label>
+                            <input id="create-visit-time" type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Doctor:</label>
+                        <input id="create-doctor" type="text" class="form-control" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <label for="">Patient ID:</label>
+                                <input onchange="clearPatientDetail()" id="create-patient-id" type="number"
+                                    class="form-control" placeholder="">
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <label for="exampleFormControlInput1">Patient Name:</label>
+                                <input id="create-patient-name" type="text" class="form-control" placeholder=""
+                                    disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-12">
+                            <label for="exampleFormControlInput1">Email:</label>
+                            <input id="create-patient-email" type="text" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6">
+                            <label for="exampleFormControlInput1">Age:</label>
+                            <input id="create-patient-age" type="number" class="form-control" placeholder="" disabled>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6">
+                            <label for="exampleFormControlInput1">Gender:</label>
+                            <input id="create-patient-gender" type="text" class="form-control" placeholder="" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Address:</label>
+                        <input id="create-patient-address" type="text" class="form-control" placeholder="" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Problems:</label>
+                        <textarea name="problems" id="create-problems" class="form-control" placeholder="" cols="30"
+                            rows="2"></textarea>
+                    </div>
+
+                </form>
+            </section>
+
+            <div class="form-group form-inline">
+                <h4>Prescriptions ID:</h4>
+                <select onchange="displayPrescriptionOnChange()" name="" id="prescription-id"
+                    class="browser-default custom-select" style="margin-left: 1em; height: 2em; width: 10em;">
+                    <option value="na">Not available</option>
+                </select>
+            </div>
+
+            <!-- Diagnosis list -->
+            <div class="row" style="margin-bottom: 0.7em; margin-left: 0em;">
+                <div class="col-md-9" style="padding: 0;">
+                    <h5>Diagnosis list:</h5>
+                </div>
+
+                <div class="col-md-3" style="padding-right: 0.8em;">
+                    <button onclick="addICD()" type="submit" class=" btn btn-outline-dark" style="float: right;">Add
+                        ICD</button>
+                </div>
+            </div>
+
+            <section class="user-info"
+                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; background-color: white; border:1px solid black">
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">General diagnosis:</label>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-8">
+                            <input id="new-diagnosis" type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <button id="order-btn" onclick="" type="button" class="btn btn-outline-dark"
+                                data-dismiss="modal" data-toggle="modal" data-target="#medicalServices">
+                                Lab Order</button>
+                        </div>
+                    </div>
+                </div>
+
+                <ol class="icd-list">
+                    <li>
+                        <div class="row" style="margin-bottom: 1em">
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <input name="new-icd-code" type="text" class="form-control" placeholder="ICD Code">
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-12">
+                                <input name="new-icd-detail" type="text" class="form-control"
+                                    placeholder="ICD Description">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6">
+                                <button onclick="loadICD(0)" type="button" class=" icd-btn btn btn-outline-dark"
+                                    data-dismiss="modal" data-toggle="modal" data-target="#ICDList">
+                                    ICD</button>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="row" style="margin-bottom: 1em">
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <input name="new-icd-code" type="text" class="form-control" placeholder="ICD Code">
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-12">
+                                <input name="new-icd-detail" type="text" class="form-control"
+                                    placeholder="ICD Description">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6">
+                                <button onclick="loadICD(1)" type="button" class=" icd-btn btn btn-outline-dark"
+                                    data-dismiss="modal" data-toggle="modal" data-target="#ICDList">
+                                    ICD</button>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+
+            </section>
+
+            <div class="row" style="margin-top: 0.7em;margin-bottom: 0.7em; margin-left: 0em;">
+                <div class="col-md-9" style="padding: 0;">
+                    <h5>Drug list:</h5>
+                </div>
+
+                <div class="col-md-3" style="padding-right: 0.8em;">
+                    <button onclick="addDrugRow()" type="submit" class=" btn btn-outline-dark" style="float: right;">Add
+                        Drug</button>
+                </div>
+            </div>
+
+            <section class="user-info"
+                style="width: 100%; margin: auto; background-color: white; border:1px solid black; overflow: auto;">
+                <table class="drug-table">
+                    <tr>
+                        <th style="width: 5%;"></th>
+                        <th style="width: 10%;">Drug ID</th>
+                        <th style="width: 20%;">Drug Name</th>
+                        <th style="width: 10%;">Quantity</th>
+                        <th style="width: 10%;">Unit</th>
+                        <th style="width: 12%;">Usage</th>
+                        <th style="width: 23%">Note</th>
+                        <th style="width: 10%;">Price($)</th>
+                    </tr>
+                    <tr>
+                        <td><button onclick="deleteDrugRow(1)" class="delete-drug" value="1">&times;</button></td>
+                        <td><input name="input1" type="text" class=" create-drug-id form-control" placeholder=""></td>
+                        <td><input name="input1" type="text" class="form-control" placeholder=""></td>
+                        <td><input name="input1" type="text" class="form-control" placeholder=""></td>
+                        <td><input name="input1" type="text" class="form-control" placeholder=""></td>
+                        <td><input name="input1" type="text" class="form-control" placeholder=""></td>
+                        <td><input name="input1" type="text" class="form-control" placeholder=""></td>
+                        <td><input name="input1" type="text" class="form-control" placeholder=""></td>
+                    </tr>
+                    <div id="hidden"></div>
+                </table>
+            </section>
+
+            <div class="modal-footer">
+                <button onclick="doUpdate()" id="submit" type="submit" class="btn btn-dark">Save</button>
+                <button onclick="directToVisitDetails()" type="button" class="btn btn-dark">Cancel</button>
+            </div>
+        </div>
+
+
+        <!--ICD table - ICDList Modal-->
+        <div class="modal" id="ICDList">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">ICD List:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <section class="user-info"
+                                style="padding-top: 20px; padding-bottom: 20px; width: 100%; margin: auto; background-color: white">
+                                <div class="container smooth-scroll">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 20%">ICD Code</th>
+                                                <th style="width: 70%">ICD Description</th>
+                                                <th style="width: 10%">Select</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+                            data-target="#createPrescriptionModal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Order lab test modal-->
+        <div class="modal" id="medicalServices">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Medical services:</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <h5>Ultrasound:</h5>
+                            <section class="ultrasound"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 1em; background-color: white; border:1px solid black">
+
+                            </section>
+
+                            <h5>X-Ray:</h5>
+                            <section class="x-ray"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 1em; background-color: white; border:1px solid black">
+
+
+                            </section>
+
+                            <h5>Urine Test:</h5>
+                            <section class="urine-test"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 1em; background-color: white; border:1px solid black">
+
+                            </section>
+
+                            <h5>Blood Test:</h5>
+                            <section class="blood-test"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 1em; background-color: white; border:1px solid black">
+
+                            </section>
+
+                            <h5>MRI:</h5>
+                            <section class="MRI"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 1em; background-color: white; border:1px solid black">
+
+
+                            </section>
+
+                            <h5>CT:</h5>
+                            <section class="CT"
+                                style="padding: 20px 20px 20px 20px; width: 100%; margin: auto; margin-bottom: 1em; background-color: white; border:1px solid black">
+
+
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button onclick="" type="button" class="btn btn-dark" data-dismiss="modal"
+                            data-toggle="modal">Save</button>
+                        <button type="button" class="btn btn-dark" data-toggle="modal"
+                            data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    baseURL = "http://localhost:8080"
+    var username = sessionStorage.username
+    var password = sessionStorage.password
+    var code = window.btoa(`${username}:${password}`)
+
+    function addICD() {
+        var maxICDItems = 100;
+
+        if ($(".icd-list li").length > (maxICDItems - 1)) {
+            alert("ICD items reach maximum of " + maxICDItems + ".")
+        } else {
+            var $newItem = $(`<li>
+                            <div class="row" style="margin-bottom: 1em">
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <input name="new-icd-code" type="text"  class="form-control"
+                                                        placeholder="ICD Code">
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12">
+                                    <input name="new-icd-detail" type="text"  class="form-control"
+                                                        placeholder="ICD Description">
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-6">
+                                    <button onclick="loadICD(${$(".icd-list li").length})" type="button" class=" icd-btn btn btn-outline-dark" data-dismiss="modal" data-toggle="modal"
+                                                data-target="#ICDList">
+                                                        ICD</button>
+                                </div>
+                                <input class="hidden-input" type="text" hidden></input>
+                            </div>
+                        </li>`)
+
+            $('.icd-list').append($newItem);
+        }
+    }
+
+    function addDrugRow() {
+        var table = document.getElementsByClassName('drug-table')[0]
+
+        var newRow = table.insertRow(table.rows.length);
+
+        var cel1 = newRow.insertCell(0);
+        var cel2 = newRow.insertCell(1);
+        var cel3 = newRow.insertCell(2);
+        var cel4 = newRow.insertCell(3);
+        var cel5 = newRow.insertCell(4);
+        var cel6 = newRow.insertCell(5);
+        var cel7 = newRow.insertCell(6);
+        var cel8 = newRow.insertCell(7);
+
+        cel1.innerHTML =
+            `<button onclick="deleteDrugRow(${table.rows.length - 1})" class="delete-drug" value="${table.rows.length - 1}">&times;</button>
+             <input type="text" class="hidden-input-table" hidden></input>`;
+        cel2.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text" class="create-drug-id form-control" placeholder="">`;
+        cel3.innerHTML = `<input name="input${table.rows.length - 1}" type="text" class="form-control" placeholder="">`;
+        cel4.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text" class="create-quantity form-control" placeholder="">`;
+        cel5.innerHTML = `<input name="input${table.rows.length - 1}" type="text" class="form-control" placeholder="">`;
+        cel6.innerHTML = `<input name="input${table.rows.length - 1}" type="text" class="form-control" placeholder="">`;
+        cel7.innerHTML = `<input name="input${table.rows.length - 1}" type="text" class="form-control" placeholder="">`;
+        cel8.innerHTML = `<input name="input${table.rows.length - 1}" type="text" class="form-control" placeholder="">`;
+    }
+
+    function addDrugRowWithValues(id, name, quantity, unit, usage, note, price) {
+        var table = document.getElementsByClassName('drug-table')[0]
+
+        var newRow = table.insertRow(table.rows.length);
+
+        var cel1 = newRow.insertCell(0);
+        var cel2 = newRow.insertCell(1);
+        var cel3 = newRow.insertCell(2);
+        var cel4 = newRow.insertCell(3);
+        var cel5 = newRow.insertCell(4);
+        var cel6 = newRow.insertCell(5);
+        var cel7 = newRow.insertCell(6);
+        var cel8 = newRow.insertCell(7);
+
+        cel1.innerHTML =
+            `<button onclick="deleteDrugRow(${table.rows.length - 1})" class="delete-drug" value="${table.rows.length - 1}">&times;</button>
+            <input type="text" class="hidden-input-table" hidden></input>`;
+        cel2.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text" class=" create-drug-id form-control" placeholder="" value="${id}">`;
+        cel3.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text"  class="form-control" placeholder="" value="${name}">`;
+        cel4.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text"  class="create-quantity form-control" placeholder="" value="${quantity}">`;
+        cel5.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text"  class="form-control" placeholder="" value="${unit}">`;
+        cel6.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text"  class="form-control" placeholder="" value="${usage}">`;
+        cel7.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text"  class="form-control" placeholder="" value="${note}">`;
+        cel8.innerHTML =
+            `<input name="input${table.rows.length - 1}" type="text"  class="form-control" placeholder="" value="${price}">`;
+    }
+
+    function deleteDrugRow(i) {
+        var table = document.getElementsByClassName('drug-table')[0]
+        for (let n = 0; n <= 6; n++) {
+            document.getElementsByName('input' + i)[n].value = ""
+        }
+    }
+
+    function displayVisit() {
+        //Create API to search Visit ID -- done
+        fetch(baseURL + '/visits/search?id=' + document.getElementById("create-visit-id").value, {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                /* Validation */
+
+                /* Display */
+                document.getElementById("create-visit-date").value = json[0].visitDate;
+                document.getElementById("create-visit-time").value = json[0].visitTime;
+                document.getElementById("create-patient-id").value = json[0].patient.id;
+                document.getElementById("create-doctor").value = json[0].doctor;
+                document.getElementById("create-patient-email").value = json[0].patient.email;
+                document.getElementById("create-patient-name").value = json[0].patient.name;
+                var dt = new Date();
+                var bd = new Date(json[0].patient.birthdate);
+                document.getElementById("create-patient-age").value = dt.getYear() - bd.getYear();
+                document.getElementById("create-patient-gender").value = json[0].patient.gender;
+                document.getElementById("create-patient-address").value = json[0].patient.address;
+                document.getElementById("create-problems").value = json[0].problems;
+            })
+
+    }
+
+    function displayPrescription() {
+        var visitid = $('#create-visit-id').val()
+
+        //Change name to lab order
+        //document.getElementById("order-btn").innerHTML = "Lab Order";
+
+        fetch(baseURL + '/prescriptions/search?visit=' + visitid, {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.length === 0) {
+                    document.getElementById("prescription-id").value = "na";
+                    document.getElementById("prescription-id").disabled = true;
+                    document.getElementById("new-diagnosis").value = "Not available";
+                    document.getElementById("order-btn").disabled = true;
+                    document.getElementsByName("new-icd-code")[0].value = "Not available";
+                    document.getElementsByName("new-icd-code")[1].value = "Not available";
+                    document.getElementsByName("new-icd-detail")[0].value = "Not available";
+                    document.getElementsByName("new-icd-detail")[1].value = "Not available";
+                } else {
+                    //Add to prescription id options
+                    //console.log(1)
+                    $("#prescription-id option[value='na']").remove();
+
+                    for (let m = 0; m < json.length; m++) {
+                        //var $newItem = $(`<options value="${m}">${m}</options>`);
+
+                        //console.log(1)
+                        //$('#prescription-id').append($newItem);
+
+                        var option = document.createElement("option");
+                        option.text = json[m].id;
+                        option.value = json[m].id;
+                        if (m === 0) option.selected = true;
+                        var select = document.getElementById("prescription-id");
+                        select.appendChild(option);
+
+                    }
+
+
+                    document.getElementById("new-diagnosis").value = json[0].generalDiagnosis;
+
+                    /*Display ICD*/
+                    //Clear
+                    for (let l = ($(".icd-list li").length - 1); l >= 0; l--) {
+                        document.getElementsByTagName('ol')[0].removeChild(document.getElementsByTagName('li')[l])
+                    }
+
+                    //Add according to json.icd.length + display data
+                    fetch(baseURL + '/icdlists/search?prescription=' + json[0].id, {
+                        headers: {
+                            'Authorization': 'Basic ' + code
+                        }
+                    })
+                        .then((res) => res.json())
+                        .then((jsonicd) => {
+                            for (let i = 0; i < jsonicd.length; i++) {
+                                addICD();
+                                document.getElementsByName("new-icd-code")[i].value = jsonicd[i].icd.code;
+                                document.getElementsByName("new-icd-detail")[i].value = jsonicd[i].icd
+                                    .description;
+                                document.getElementsByClassName("hidden-input")[i].value = jsonicd[i].id;
+                            }
+                        })
+
+                    /*Display drugs*/
+                    //Clear
+                    var table = document.getElementsByClassName('drug-table')[0]
+                    for (let i = table.rows.length - 1; i > 0; i--) {
+                        table.deleteRow(i);
+                    }
+
+                    //Add
+                    fetch(baseURL + '/drugprescriptions/search?prescription=' + json[0].id, {
+                        headers: {
+                            'Authorization': 'Basic ' + code
+                        }
+                    })
+                        .then((res) => res.json())
+                        .then((jsondrug) => {
+                            for (let i = 0; i < jsondrug.length; i++) {
+
+                                addDrugRowWithValues(jsondrug[i].drug.id, jsondrug[i].drug.name, jsondrug[i]
+                                    .amount,
+                                    jsondrug[i].drug.unit, jsondrug[i].drug.usage, jsondrug[i].prescription
+                                        .usage,
+                                    jsondrug[i]
+                                        .drug
+                                        .price)
+
+                                //prescription usage is NOTE field
+
+                                document.getElementsByClassName("hidden-input-table")[i].value = jsondrug[i].id;
+                            }
+
+                        })
+
+                    /*Display medical services*/
+
+                    fetch(baseURL + '/medservices/search?prescription=' + json[0].id, {
+                        headers: {
+                            'Authorization': 'Basic ' + code
+                        }
+                    })
+                        .then((res) => res.json())
+                        .then((jsonmed) => {
+
+                            for (let i = 0; i < jsonmed.length; i++) {
+                                for (let j = 0; j < document.getElementsByClassName("medservice").length; j++) {
+                                    //console.log(document.getElementsByClassName("medservice")[j].value)
+                                    //console.log(jsonmed[i].id)
+                                    if (jsonmed[i].id == document.getElementsByClassName("medservice")[j]
+                                        .value) {
+                                        document.getElementsByClassName("medservice")[j].checked = true;
+                                        break;
+                                    }
+
+                                }
+                            }
+                        })
+
+                }
+            })
+
+    }
+
+    function displayPrescriptionOnChange() {
+
+        var visitid = $('#create-visit-id').val();
+        var prescriptionid = $('#prescription-id').val();
+
+        //Change name to lab order
+        //document.getElementById("order-btn").innerHTML = "Lab Order";
+
+        fetch(baseURL + '/prescriptions/search?visit=' + visitid, {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    if (json[i].id == prescriptionid) document.getElementById("new-diagnosis").value = json[i]
+                        .generalDiagnosis;
+                }
+
+                /*Display ICD*/
+                //Clear
+                for (let l = ($(".icd-list li").length - 1); l >= 0; l--) {
+                    document.getElementsByTagName('ol')[0].removeChild(document.getElementsByTagName('li')[l])
+                }
+
+                //Add according to json.icd.length + display data
+                fetch(baseURL + '/icdlists/search?prescription=' + prescriptionid, {
+                    headers: {
+                        'Authorization': 'Basic ' + code
+                    }
+                })
+                    .then((res) => res.json())
+                    .then((jsonicd) => {
+                        for (let i = 0; i < jsonicd.length; i++) {
+                            addICD();
+                            document.getElementsByName("new-icd-code")[i].value = jsonicd[i].icd.code;
+                            document.getElementsByName("new-icd-detail")[i].value = jsonicd[i].icd.description;
+                            document.getElementsByClassName("hidden-input")[i].value = jsonicd[i].id;
+                        }
+                    })
+
+                /*Display drugs*/
+                //Clear
+                var table = document.getElementsByClassName('drug-table')[0]
+                for (let i = table.rows.length - 1; i > 0; i--) {
+                    table.deleteRow(i);
+                }
+
+                //Add
+
+                fetch(baseURL + '/drugprescriptions/search?prescription=' + prescriptionid, {
+                    headers: {
+                        'Authorization': 'Basic ' + code
+                    }
+                })
+                    .then((res) => res.json())
+                    .then((jsondrug) => {
+                        for (let i = 0; i < jsondrug.length; i++) {
+
+                            addDrugRowWithValues(jsondrug[i].drug.id, jsondrug[i].drug.name, jsondrug[i].amount,
+                                jsondrug[i].drug.unit, jsondrug[i].drug.usage, jsondrug[i].prescription
+                                    .usage,
+                                jsondrug[i]
+                                    .drug
+                                    .price)
+
+                            //prescription usage is NOTE field
+
+                            document.getElementsByClassName("hidden-input-table")[i].value = jsondrug[i].id;
+                        }
+
+                    })
+
+                /*
+                fetch(baseURL + '/drugs/search?prescription=' + prescriptionid)
+                    .then((res) => res.json())
+                    .then((jsondrug) => {
+                        for (let i = 0; i < jsondrug.length; i++) {
+                            addDrugRowWithValues(jsondrug[i].id, jsondrug[i].name, json[value].amount, jsondrug[
+                                    i].unit, jsondrug[i].usage, json[value].usage, jsondrug[i]
+                                .price) //prescription usage is NOTE field
+                        }
+
+                    })
+                    */
+                /*Display medical services*/
+                //Unchecked all
+                for (let i = $("input:checked").length - 1; i >= 0; i--) {
+                    $("input:checked")[i].checked = false;
+                }
+
+                //Add
+                fetch(baseURL + '/medservices/search?prescription=' + prescriptionid, {
+                    headers: {
+                        'Authorization': 'Basic ' + code
+                    }
+                })
+                    .then((res) => res.json())
+                    .then((jsonmed) => {
+
+                        for (let i = 0; i < jsonmed.length; i++) {
+                            for (let j = 0; j < document.getElementsByClassName("medservice").length; j++) {
+                                //console.log(document.getElementsByClassName("medservice")[j].value)
+                                //console.log(jsonmed[i].id)
+                                if (jsonmed[i].id == document.getElementsByClassName("medservice")[j]
+                                    .value) {
+                                    document.getElementsByClassName("medservice")[j].checked = true;
+                                    break;
+                                }
+
+                            }
+                        }
+                    })
+
+
+            })
+
+    }
+
+    function processURL() {
+        var parameters = location.search.substring(1).split("=");
+        //console.log(parameters[1])
+        if (typeof parameters[1] !== "undefined") {
+            document.getElementById("create-visit-id").value = parameters[1]
+
+            displayVisit()
+            displayPrescription()
+        }
+    }
+
+    function loadICD(index) {
+        var table = document.getElementsByTagName('table')[1]
+
+        for (let i = table.rows.length - 1; i > 0; i--) {
+            table.deleteRow(i);
+        }
+
+        fetch(baseURL + '/icds', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var newRow = table.insertRow(table.rows.length);
+
+                    var cel1 = newRow.insertCell(0);
+                    var cel2 = newRow.insertCell(1);
+                    var cel3 = newRow.insertCell(2);
+
+                    var str = `<div class="float-left" style="margin-right: 10px">
+                                    <button onclick="selectICD(${index}, '${json[i].code}', '${json[i].description}')" type="submit"
+                                        class="btn btn-outline-dark" data-dismiss="modal">Select</button>
+                                </div>`;
+
+                    cel1.innerHTML = json[i].code;
+                    cel2.innerHTML = json[i].description;
+                    cel3.innerHTML = str;
+
+                }
+            })
+    }
+
+    function selectICD(i, code, description) {
+        document.getElementsByName("new-icd-code")[i].value = code;
+        document.getElementsByName("new-icd-detail")[i].value = description;
+    }
+
+    function loadMedService() {
+        fetch(baseURL + '/medservices/search?type=' + 'Ultrasound', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var $newItem = $(
+                        `<input class=" medservice" value="${json[i].id}" type="checkbox" style="margin-bottom: 1em;"> ${json[i].name} <br>`
+                    )
+
+                    $('.ultrasound').append($newItem);
+                }
+            })
+
+        fetch(baseURL + '/medservices/search?type=' + 'X-Ray', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var $newItem = $(
+                        `<input class=" medservice" value="${json[i].id}" type="checkbox" style="margin-bottom: 1em;"> ${json[i].name} <br>`
+                    )
+
+                    $('.x-ray').append($newItem);
+                }
+            })
+
+        fetch(baseURL + '/medservices/search?type=' + 'Urine Test', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var $newItem = $(
+                        `<input class=" medservice" value="${json[i].id}" type="checkbox" style="margin-bottom: 1em;"> ${json[i].name} <br>`
+                    )
+
+                    $('.urine-test').append($newItem);
+                }
+            })
+
+        fetch(baseURL + '/medservices/search?type=' + 'Blood Test', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var $newItem = $(
+                        `<input  class=" medservice" value="${json[i].id}" type="checkbox" style="margin-bottom: 1em;"> ${json[i].name} <br>`
+                    )
+
+                    $('.blood-test').append($newItem);
+                }
+            })
+
+        fetch(baseURL + '/medservices/search?type=' + 'MRI', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var $newItem = $(
+                        `<input  class=" medservice" value="${json[i].id}" type="checkbox" style="margin-bottom: 1em;"> ${json[i].name} <br>`
+                    )
+
+                    $('.MRI').append($newItem);
+                }
+            })
+
+        fetch(baseURL + '/medservices/search?type=' + 'CT', {
+            headers: {
+                'Authorization': 'Basic ' + code
+            }
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+                    var $newItem = $(
+                        `<input  class=" medservice" value="${json[i].id}" type="checkbox" style="margin-bottom: 1em;"> ${json[i].name} <br>`
+                    )
+
+                    $('.CT').append($newItem);
+                }
+            })
+    }
+
+
+    function directToVisitDetails() {
+        var visitid = document.getElementById("create-visit-id").value;
+
+        window.location.href = "visitDetails.html?visitId=" + visitid;
+    }
+
+    function doUpdate() {
+
+        var visitid = $('#create-visit-id').val()
+        var genDiagnosis = $('#new-diagnosis').val()
+        var prescriptionid = $('#prescription-id').val();
+        var visitdate = $('#create-visit-date').val()
+        var visittime = $('#create-visit-time').val()
+        var problems = $('#create-problems').val()
+        var doctor = $('#create-doctor').val()
+        var patientID = $('#create-patient-id').val()
+
+        /*Update prescription*/
+        //Find prescription id base on value/index
+        // fetch(baseURL + '/prescriptions/search?visit=' + visitid)
+        //     .then((res) => res.json())
+        //     .then((json2) => {
+        //         //console.log(value)
+        //         //console.log(json2[value].id)
+        //         document.getElementById("prescription-id-value").value =
+        //             json2[value].id;
+        //         //console.log(prescriptionid)
+        //         //console.log(document.getElementById("prescription-id-value").value)
+        //     })
+        // var prescriptionid = 6;
+
+
+        //Delete drugpres, labtest, icdlist
+        /*
+        fetch(baseURL + '/labtests/search?prescription=' + prescriptionid)
+            .then((res) => res.json())
+            .then((json) => {
+                for (let i = 0; i < json.length; i++) {
+
+                    fetch(baseURL + '/labtests/' + json[i].id, {
+                        method: 'delete'
+                    })
+
+                }
+            })
+            */
+
+
+        //Add drug to prescription
+        var drugpres = [];
+
+        for (let drugIndex = 0; drugIndex < document.getElementsByClassName('drug-table')[0].rows.length -
+            1; drugIndex++) {
+            if (document.getElementsByClassName("create-drug-id")[drugIndex].value === "") continue;
+            //console.log(document.getElementsByClassName("create-drug-id")[drugIndex].value)
+
+            if (document.getElementsByClassName("hidden-input-table")[drugIndex].value !== "") {
+
+                drugpres.push({
+                    'id': document.getElementsByClassName("hidden-input-table")[drugIndex].value,
+                    'amount': document.getElementsByClassName("create-quantity")[drugIndex].value,
+                    'drug': {
+                        'id': document.getElementsByClassName("create-drug-id")[drugIndex].value
+                    }
+                });
+
+            } else {
+
+                drugpres.push({
+                    'amount': document.getElementsByClassName("create-quantity")[drugIndex].value,
+                    'drug': {
+                        'id': document.getElementsByClassName("create-drug-id")[drugIndex].value
+                    }
+                });
+            }
+        }
+
+        //Add icd to prescription
+        var icdlist = [];
+
+        for (let icdIndex = 0; icdIndex < $(".icd-list li").length; icdIndex++) {
+            if (document.getElementsByName("new-icd-code")[icdIndex].value === "") continue;
+            //console.log(document.getElementsByClassName("create-drug-id")[drugIndex].value)
+            if (document.getElementsByClassName("hidden-input")[icdIndex].value !== "") {
+
+                icdlist.push({
+                    'id': document.getElementsByClassName("hidden-input")[icdIndex].value,
+                    'icd': {
+                        'code': document.getElementsByName("new-icd-code")[icdIndex].value
+                    }
+                });
+
+            } else {
+                icdlist.push({
+                    'icd': {
+                        'code': document.getElementsByName("new-icd-code")[icdIndex].value
+                    }
+                });
+            }
+        }
+
+        //Add medical services
+        var labtest = [];
+
+        for (let medIndex = 0; medIndex < $("input:checked").length; medIndex++) {
+            labtest.push({
+                'medicalService': {
+                    'id': $("input:checked")[medIndex].value
+                }
+            });
+        }
+
+        //Add to database
+        var obj = {
+            'id': prescriptionid,
+            'generalDiagnosis': genDiagnosis,
+            'visit': {
+                'id': visitid
+            },
+            'drugpres': drugpres,
+            'icdlist': icdlist,
+            'labtest': labtest
+        }
+
+        fetch(baseURL + '/prescriptions', {
+            headers: {
+                'Authorization': 'Basic ' + code,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify(obj)
+        })
+
+
+        /*Update visit*/
+        var objvisit = {
+            'id': visitid,
+            'visitDate': visitdate,
+            'visitTime': visittime,
+            'problems': problems,
+            'doctor': doctor,
+
+            'patient': {
+                'id': patientID
+            }
+        }
+
+        fetch(baseURL + '/visits', {
+            headers: {
+                'Authorization': 'Basic ' + code,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'put',
+            body: JSON.stringify(objvisit)
+        })
+
+        var visitid = document.getElementById("create-visit-id").value;
+        window.location.href = "visitDetails.html?visitId=" + visitid;
+    }
+
+    function clearPatientDetail() {
+        document.getElementById("create-patient-name").value = ""
+        document.getElementById("create-patient-email").value = ""
+        document.getElementById("create-patient-age").value = ""
+        document.getElementById("create-patient-gender").value = ""
+        document.getElementById("create-patient-address").value = ""
+    }
+
+    processURL()
+    loadMedService()
+</script>
+
+</html>
